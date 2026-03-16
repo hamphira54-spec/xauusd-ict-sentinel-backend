@@ -288,34 +288,42 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.post('/api/scan', authMiddleware, async (req, res) => {
+app.post('/api/scan', async (req, res) => {
   try {
-    const validationError = validateScanBody(req.body);
-    if (validationError) {
-      return res.status(400).json({ ok: false, error: validationError });
+    const body = req.body || {};
+    console.log('SCAN BODY:', JSON.stringify(body, null, 2));
+
+    const symbol = body.symbol;
+    const screenshots = body.screenshots || {};
+
+    if (symbol !== 'XAUUSD') {
+      return res.status(400).json({
+        ok: false,
+        error: 'Invalid symbol',
+        receivedSymbol: symbol
+      });
     }
 
-    const weekdayAllowed = isWeekdayUtc();
-    const session = detectSessionUtc();
-    const scanResult = await callOpenAI(req.body);
+    const required = ['1W', '1H', '15M', '5M', '1M'];
+    const missing = required.filter(tf => !screenshots[tf]);
 
-    const accepted = ['A++', 'A+++'].includes(scanResult.grade);
-
-    if (accepted && req.body.telegramMirroringEnabled) {
-      await sendTelegram(scanResult);
+    if (missing.length > 0) {
+      return res.status(400).json({
+        ok: false,
+        error: 'Missing required screenshots',
+        missing
+      });
     }
 
-    res.json({
+    return res.json({
       ok: true,
-      accepted,
-      weekdayAllowed,
-      session,
-      signal: scanResult
+      message: 'Scan payload accepted'
     });
-  } catch (error) {
-    res.status(500).json({
+  } catch (err) {
+    console.error('SCAN ERROR:', err);
+    return res.status(500).json({
       ok: false,
-      error: error instanceof Error ? error.message : 'Unknown server error'
+      error: err.message
     });
   }
 });
