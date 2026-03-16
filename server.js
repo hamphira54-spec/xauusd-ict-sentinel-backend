@@ -293,31 +293,27 @@ app.post('/api/scan', async (req, res) => {
     const body = req.body || {};
     console.log('SCAN BODY:', JSON.stringify(body, null, 2));
 
-    const symbol = body.symbol;
-    const screenshots = body.screenshots || {};
-
-    if (symbol !== 'XAUUSD') {
-      return res.status(400).json({
-        ok: false,
-        error: 'Invalid symbol',
-        receivedSymbol: symbol
-      });
-    }
-
-    const required = ['1W', '1H', '15M', '5M', '1M'];
-    const missing = required.filter(tf => !screenshots[tf]);
-
-    if (missing.length > 0) {
-      return res.status(400).json({
-        ok: false,
-        error: 'Missing required screenshots',
-        missing
-      });
-    }
-
     return res.json({
       ok: true,
-      message: 'Scan payload accepted'
+      pair: 'XAUUSD',
+      bias: 'neutral',
+      setupCategory: 'continuation',
+      modelDetected: 'FVG Continuation',
+      grade: 'A++',
+      qualityScore: 85,
+      confidence: 80,
+      entryRange: {
+        min: 0,
+        max: 0
+      },
+      stopLoss: 0,
+      tp1: 0,
+      tp2: 0,
+      session: 'NewYork',
+      liquidityEvent: 'Test connection',
+      nextTarget: 'Test target',
+      reasoning: ['Backend connection successful'],
+      warning: 'Validation temporarily bypassed for testing'
     });
   } catch (err) {
     console.error('SCAN ERROR:', err);
