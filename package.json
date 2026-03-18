@@ -1,11 +1,11 @@
 {
-  "name": "xauusd-ict-sentinel-backend",
-  "version": "1.0.0",
+  "name": "xauusd-ict-sentinel-backend-v2",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Portable backend API for XAUUSD ICT Sentinel",
+  "description": "Upgraded portable backend API for XAUUSD ICT Sentinel",
   "scripts": {
-    "start": "node server.js",
+    "start": "node src/server.js",
     "dev": "node --watch src/server.js"
   },
   "dependencies": {

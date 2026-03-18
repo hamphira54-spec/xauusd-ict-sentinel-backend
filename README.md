@@ -1,46 +1,27 @@
-# XAUUSD ICT Sentinel Backend
+# XAUUSD ICT Sentinel Backend v2
 
-Portable backend API for the Chrome extension.
+This is the upgraded portable backend for the Chrome extension.
 
-## What it does
-- Receives TradingView screenshots from the extension
-- Validates XAUUSD-only scan payloads
-- Sends multi-timeframe image input to OpenAI
-- Returns a structured signal to the extension
-- Optionally mirrors accepted A++ / A+++ signals to Telegram
+## What is improved
+- Accepts both `screenshots[]` payloads and single `screenshot` payloads
+- XAUUSD-only validation
+- OpenAI Responses API integration for screenshot reasoning
+- Telegram alert mirroring for A++ / A+++ signals
+- In-memory duplicate alert suppression
+- Better health endpoint
 
 ## Endpoints
 - `GET /health`
 - `POST /api/scan`
 
-## Minimum VPS setup
-1. Ubuntu 22.04 VPS
-2. Install Node.js 20+
-3. Upload this folder
-4. Copy `.env.example` to `.env`
-5. Fill in your keys
-6. Run `npm install`
-7. Run `npm start`
-
-## Local commands
-```bash
-npm install
-cp .env.example .env
-npm start
-```
-
-## Test health
-Open:
-```text
-http://YOUR_SERVER_IP:3000/health
-```
-
-## Extension settings
-In your Chrome extension options page:
-- Backend Base URL: `http://YOUR_SERVER_IP:3000`
-- API Key: same as `EXTENSION_API_KEY` in `.env`
+## Required Railway / VPS variables
+- `OPENAI_API_KEY`
+- `EXTENSION_API_KEY`
+- `TELEGRAM_BOT_TOKEN` (optional)
+- `TELEGRAM_CHAT_ID` (optional)
 
 ## Notes
-- If `OPENAI_API_KEY` is missing, the backend returns a fallback connectivity result for testing.
-- Real trade analysis requires OpenAI to be configured.
-- The current package is intentionally simple and portable. It is a backend starter, not a fully hardened enterprise deployment.
+- Do not store or commit real keys into the repo.
+- If OpenAI is not configured, the backend returns a safe fallback result.
+- Telegram only sends when the grade is `A++` or `A+++`.
+- Screenshot quality and chart clarity strongly affect analysis quality.
