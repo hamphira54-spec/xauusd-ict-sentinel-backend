@@ -5,8 +5,8 @@
   "type": "module",
   "description": "Upgraded portable backend API for XAUUSD ICT Sentinel",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
