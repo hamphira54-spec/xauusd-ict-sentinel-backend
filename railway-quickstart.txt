@@ -1,9 +1,0 @@
-Railway quick steps
-
-1. Push this folder to GitHub.
-2. Connect Railway to the repo.
-3. Add variables from .env.example.
-4. Generate domain.
-5. Put the Railway base URL into the extension Options page.
-6. Use the same EXTENSION_API_KEY value in Railway and extension.
-7. Test /health first, then Analyze Now on TradingView.
