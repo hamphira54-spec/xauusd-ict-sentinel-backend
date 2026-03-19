@@ -1,0 +1,19 @@
+{
+  "name": "xauusd-ict-sentinel-backend",
+  "version": "2.0.0",
+  "description": "Institutional AI Trading Assistant backend for XAUUSD using structured ICT data",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  }
+}
